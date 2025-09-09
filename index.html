@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Agora Scolaire - Le Projet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrNjR4r1Mv1Tz2t5ZJ6L3J5p5d5e2K6h8p8l8+8eP6eP2e3h8eA1/d4s/vA5u+5n3r6g4t8" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F8F0; /* Un beige très clair */
+            color: #2D2D2D;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .section {
+            padding: 100px 0;
+            scroll-margin-top: 80px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            background-color: #556B2F; /* Vert Olive */
+            color: white;
+            padding: 16px 36px;
+            border-radius: 9999px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn:hover {
+            background-color: #6B8E23;
+            transform: translateY(-2px);
+        }
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #556B2F;
+        }
+        /* Style du graphique circulaire (inchangé) */
+        .pie-chart {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background-image: conic-gradient(
+                #A26769 0% 27%,
+                #8D99AE 27% 53%,
+                #588B8B 53% 70%,
+                #E2A27F 70% 84%,
+                #98C694 84% 100%
+            );
+            animation: rotate 10s infinite linear;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        /* Styles pour le nouveau graphique à barres */
+        .bar-chart-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 300px;
+            gap: 20px;
+            padding: 20px;
+            background-color: #f0f0e0;
+            border-radius: 1.5rem;
+            position: relative;
+        }
+        .bar-chart-container::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background-color: #ccc;
+        }
+        .bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+            position: relative;
+            flex-grow: 1;
+        }
+        .bar {
+            width: 80px;
+            background-color: #556B2F;
+            border-radius: 10px 10px 0 0;
+            transition: height 1s ease-out;
+            animation: grow-bar 1.5s ease-out;
+        }
+        .bar-label {
+            margin-top: 10px;
+            font-weight: 600;
+            text-align: center;
+            color: #4A5568;
+        }
+        @keyframes grow-bar {
+            from { height: 0; }
+        }
+        /* Styles pour le schéma de formation */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 2px;
+            background-color: #556B2F;
+            z-index: 10;
+        }
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 20;
+        }
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #556B2F;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        /* Animations pour la nouvelle section d'accueil */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-fade-in-scale {
+            animation: fadeInScale 1s ease-out forwards;
+        }
+        @keyframes float-shadow {
+            0% { transform: translateY(0); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+            50% { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+            100% { transform: translateY(0); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        }
+        .animate-float-shadow {
+            animation: float-shadow 3s ease-in-out infinite;
+        }
+        /* Styles pour le générateur de discours */
+        .speech-generator-card {
+            background-color: #fff;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        .speech-generator-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #556B2F;
+            margin-bottom: 1.5rem;
+        }
+        .speech-generator-card textarea {
+            min-height: 100px;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid #E5E7EB;
+            resize: vertical;
+        }
+        .speech-generator-card button {
+            background-color: #556B2F;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
+        .speech-generator-card button:hover {
+            background-color: #6B8E23;
+        }
+        /* NOUVEAUX STYLES pour la section Accueil */
+        .hero-section {
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #556B2F;
+            background-image: linear-gradient(135deg, #A8B289 0%, #CFA44C 50%, #556B2F 100%);
+            animation: backgroundMove 10s ease-in-out infinite alternate;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="none"/><path d="M0,50 C150,150 350,-50 500,50 L500,0 L0,0 Z" fill="%23FFFFFF" opacity="0.1"/></svg>');
+            animation: shapeMove 12s ease-in-out infinite;
+            transform-origin: bottom;
+        }
+
+        @keyframes backgroundMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-5%); }
+        }
+
+        @keyframes shapeMove {
+            0% { transform: scaleY(1); }
+            50% { transform: scaleY(1.1); }
+            100% { transform: scaleY(1); }
+        }
+
+        .hero-content {
+            z-index: 20;
+            position: relative;
+        }
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            letter-spacing: -2px;
+            animation: fadeInScale 1s ease-out forwards;
+        }
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: -10px;
+            animation: fadeInScale 1s ease-out forwards 0.2s;
+        }
+        .microphone-svg {
+            width: 100px;
+            height: 150px;
+            fill: #CFA44C;
+            margin-bottom: 2rem;
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <!-- En-tête et Navigation -->
+    <header class="bg-white sticky top-0 z-50 shadow-lg">
+        <nav class="container flex justify-between items-center py-5">
+            <a href="#" class="text-3xl font-bold text-green-800">L'Agora Scolaire</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#accueil" class="hover:text-green-600 transition-colors duration-300">Accueil</a>
+                <a href="#impact" class="hover:text-green-600 transition-colors duration-300">Impact</a>
+                <a href="#formation" class="hover:text-green-600 transition-colors duration-300">Formation</a>
+                <a href="#budget" class="hover:text-green-600 transition-colors duration-300">Budget</a>
+                <a href="#partenariats" class="hover:text-green-600 transition-colors duration-300">Partenariats</a>
+                <a href="#equipe" class="hover:text-green-600 transition-colors duration-300">Équipe</a>
+                <a href="#inscription" class="hover:text-green-600 transition-colors duration-300">Inscription</a>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-green-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 shadow-inner">
+            <a href="#accueil" class="block py-2 hover:text-green-600">Accueil</a>
+            <a href="#impact" class="block py-2 hover:text-green-600">Impact</a>
+            <a href="#formation" class="block py-2 hover:text-green-600">Formation</a>
+            <a href="#budget" class="block py-2 hover:text-green-600">Budget</a>
+            <a href="#partenariats" class="block py-2 hover:text-green-600">Partenariats</a>
+            <a href="#equipe" class="block py-2 hover:text-green-600">Équipe</a>
+            <a href="#inscription" class="block py-2 hover:text-green-600">Inscription</a>
+        </div>
+    </header>
+
+    <!-- Page d'Accueil avec Visuel de Micro -->
+    <section id="accueil" class="hero-section text-white rounded-b-[4rem] shadow-2xl flex items-center justify-center min-h-screen">
+        <div class="hero-bg"></div>
+        <div class="container py-12 text-center hero-content">
+            <!-- SVG du microphone avec pedestal -->
+            <svg class="microphone-svg mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 800">
+                <defs>
+                    <linearGradient id="gradient-top" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#A9A9A9;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="gradient-stand" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#808080;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#696969;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="gradient-base" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#404040;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#2F2F2F;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <!-- Microphone Head -->
+                <circle cx="250" cy="150" r="100" fill="url(#gradient-top)"/>
+                <circle cx="250" cy="150" r="90" fill="#fff" opacity="0.2"/>
+                <!-- Microphone Body -->
+                <rect x="225" y="150" width="50" height="250" rx="10" ry="10" fill="url(#gradient-stand)"/>
+                <!-- Stand -->
+                <rect x="240" y="400" width="20" height="200" rx="10" ry="10" fill="url(#gradient-stand)"/>
+                <!-- Pedestal Base -->
+                <ellipse cx="250" cy="650" rx="150" ry="50" fill="url(#gradient-base)"/>
+                <ellipse cx="250" cy="650" rx="140" ry="45" fill="#CFA44C" opacity="0.3"/>
+            </svg>
+            <h1 class="hero-title">
+                L'Agora Scolaire
+            </h1>
+            <span class="hero-subtitle mb-8 inline-block">
+                Édition 2025
+            </span>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 mt-8 opacity-0 animate-fade-in delay-500">
+                L'art de la parole au service de l'avenir. Un programme unique pour la jeunesse sénégalaise.
+            </p>
+            <div class="space-y-4 md:space-y-0 md:space-x-4 opacity-0 animate-fade-in delay-700">
+                <a href="#impact" class="btn bg-[#CFA44C] text-white hover:bg-[#D4AF37]">Découvrez le projet</a>
+                <a href="#inscription" class="btn bg-white text-green-700 hover:bg-gray-100">Rejoignez-nous</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Impact -->
+    <section id="impact" class="section bg-[#F8F8F0]">
+        <div class="container">
+            <h2 class="section-title">Impact du Projet et Calendrier</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <!-- Graphique à barres pour l'impact du projet -->
+                    <div class="bar-chart-container shadow-lg">
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 100px;"></div>
+                            <span class="bar-label">8-10<br>Établissements</span>
+                        </div>
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 180px;"></div>
+                            <span class="bar-label">150+<br>Élèves formés</span>
+                        </div>
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 250px;"></div>
+                            <span class="bar-label">500+<br>Spectateurs</span>
+                        </div>
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 120px;"></div>
+                            <span class="bar-label">10+<br>Partenaires</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-4 text-green-700">Transformer l'éloquence en opportunité</h3>
+                    <p class="mb-4 text-gray-700">
+                        Notre programme est un investissement stratégique dans le capital humain, visant à renforcer les compétences en pensée critique, communication et leadership chez les jeunes.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="card text-center bg-green-50">
+                            <h4 class="text-3xl font-bold text-green-600">8-10</h4>
+                            <p class="text-sm font-semibold text-gray-700">Établissements ciblés</p>
+                        </div>
+                        <div class="card text-center bg-blue-50">
+                            <h4 class="text-3xl font-bold text-green-600">150+</h4>
+                            <p class="text-sm font-semibold text-gray-700">Élèves formés</p>
+                        </div>
+                        <div class="card text-center bg-purple-50">
+                            <h4 class="text-3xl font-bold text-green-600">500+</h4>
+                            <p class="text-sm font-semibold text-gray-700">Spectateurs attendus</p>
+                        </div>
+                        <div class="card text-center bg-yellow-50">
+                            <h4 class="text-3xl font-bold text-green-600">10+</h4>
+                            <p class="text-sm font-semibold text-gray-700">Partenaires engagés</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <h3 class="text-2xl font-bold mb-6 text-green-700">Le Calendrier de la Compétition</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card bg-green-100 text-green-900">
+                        <h4 class="font-bold text-xl mb-2">Présélection</h4>
+                        <p class="text-gray-700">1er au 30 novembre 2025</p>
+                    </div>
+                    <div class="card bg-green-200 text-green-900">
+                        <h4 class="font-bold text-xl mb-2">Quarts de Finale</h4>
+                        <p class="text-gray-700">6 décembre 2025</p>
+                    </div>
+                    <div class="card bg-green-300 text-green-900">
+                        <h4 class="font-bold text-xl mb-2">Demi-Finales</h4>
+                        <p class="text-gray-700">13 décembre 2025</p>
+                    </div>
+                    <div class="card bg-green-400 text-green-900">
+                        <h4 class="font-bold text-xl mb-2">Grande Finale</h4>
+                        <p class="text-gray-700">27 décembre 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Formation -->
+    <section id="formation" class="section bg-gray-100">
+        <div class="container">
+            <h2 class="section-title">Le Parcours de Formation</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div class="card bg-green-50">
+                    <h3 class="font-bold text-xl mb-2 text-green-700">Séance 1</h3>
+                    <p class="text-gray-700 font-semibold mb-1">Thème: Fondamentaux de l'Art Oratoire</p>
+                    <p class="text-sm text-gray-600 italic">Cette séance se tiendra avant le premier match, pour préparer les participants aux qualifications.</p>
+                </div>
+                <div class="card bg-blue-50">
+                    <h3 class="font-bold text-xl mb-2 text-green-700">Séance 2</h3>
+                    <p class="text-gray-700 font-semibold mb-1">Thème: Structuration et Argumentation</p>
+                    <p class="text-sm text-gray-600 italic">Cette formation aura lieu avant les demi-finales, pour perfectionner l'approche des équipes.</p>
+                </div>
+                <div class="card bg-purple-50">
+                    <h3 class="font-bold text-xl mb-2 text-green-700">Séance 3</h3>
+                    <p class="text-sm text-gray-600 italic">Se tiendra le samedi 20 décembre après les demi-finales, pour affiner le style des orateurs.</p>
+                </div>
+                <div class="card bg-yellow-50">
+                    <h3 class="font-bold text-xl mb-2 text-green-700">Séance 4</h3>
+                    <p class="text-gray-700 font-semibold mb-1">Thème: L'Art de la Réfutation et de l'Improvisation</p>
+                    <p class="text-sm text-gray-600 italic">Réservée aux finalistes, cette dernière séance aura lieu le dimanche 21 décembre, pour un entraînement intensif.</p>
+                </div>
+            </div>
+            <div class="mt-12 text-center">
+                <p class="text-gray-700 italic">
+                    Un parcours pédagogique de *12 heures* par équipe, conçu pour une transformation complète des participants.
+                </p>
+            </div>
+        </div>
+        <!-- Schéma visuel du parcours de formation -->
+        <div class="flex justify-center mt-12 w-full max-w-4xl mx-auto p-12 bg-gray-200 rounded-2xl shadow-lg">
+            <div class="timeline flex-col md:flex-row">
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-seedling"></i></div>
+                    <p class="text-gray-700 font-semibold">Fondamentaux</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-lightbulb"></i></div>
+                    <p class="text-gray-700 font-semibold">Structuration</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-bullhorn"></i></div>
+                    <p class="text-gray-700 font-semibold">Style</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-medal"></i></div>
+                    <p class="text-gray-700 font-semibold">Improvisation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Budget -->
+    <section id="budget" class="section">
+        <div class="container">
+            <h2 class="section-title">Budget Prévisionnel : 3 300 000 XOF</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-16">
+                <div class="pie-chart-container">
+                    <div class="pie-chart shadow-2xl"></div>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <ul class="space-y-4 text-gray-700 font-medium">
+                        <li class="flex items-center space-x-3">
+                            <div class="w-5 h-5 rounded-full bg-[#A26769]"></div>
+                            <span>Frais de Formation & Coaching (27%) - <span class="font-semibold text-green-700">900 000 XOF</span></span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <div class="w-5 h-5 rounded-full bg-[#8D99AE]"></div>
+                            <span>Logistique & Événements (26%) - <span class="font-semibold text-green-700">850 000 XOF</span></span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <div class="w-5 h-5 rounded-full bg-[#588B8B]"></div>
+                            <span>Communication & Visibilité (17%) - <span class="font-semibold text-green-700">550 000 XOF</span></span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <div class="w-5 h-5 rounded-full bg-[#E2A27F]"></div>
+                            <span>Prix & Récompenses (14%) - <span class="font-semibold text-green-700">450 000 XOF</span></span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <div class="w-5 h-5 rounded-full bg-[#98C694]"></div>
+                            <span>Autres frais (16%) - <span class="font-semibold text-green-700">550 000 XOF</span></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Partenariats -->
+    <section id="partenariats" class="section bg-gray-100">
+        <div class="container">
+            <h2 class="section-title">Les Packs Partenariats</h2>
+            <p class="text-center text-gray-700 mb-12 max-w-2xl mx-auto">
+                En devenant partenaire, vous investissez dans le capital humain de la jeunesse. Chaque pack offre des avantages progressifs en termes de visibilité, d'image et d'implication dans le projet.
+            </p>
+            <div class="grid lg:grid-cols-4 gap-8 text-center">
+                <div class="card bg-gray-50 border-t-8 border-gray-400">
+                    <h3 class="font-bold text-2xl mb-4 text-gray-600">Pack Bronze</h3>
+                    <p class="text-3xl font-bold mb-4 text-green-700">150 000 XOF</p>
+                    <ul class="list-disc list-inside text-left text-gray-700 space-y-2">
+                        <li>Logo sur supports numériques.</li>
+                        <li>Mention dans les publications.</li>
+                        <li>Certificat de reconnaissance.</li>
+                        <li>Accès VIP à la finale.</li>
+                    </ul>
+                </div>
+                <div class="card bg-gray-100 border-t-8 border-gray-500 relative">
+                    <span class="absolute top-0 right-0 -mt-4 -mr-4 bg-[#CFA44C] text-white text-sm font-bold px-4 py-2 rounded-full transform rotate-12">TOP CHOIX</span>
+                    <h3 class="font-bold text-2xl mb-4 text-gray-700">Pack Argent</h3>
+                    <p class="text-3xl font-bold mb-4 text-green-700">350 000 XOF</p>
+                    <ul class="list-disc list-inside text-left text-gray-700 space-y-2">
+                        <li>Avantages Pack Bronze.</li>
+                        <li>Logo sur bannière principale.</li>
+                        <li>Invitation à la conférence de presse.</li>
+                        <li>Remise d'un prix en personne.</li>
+                    </ul>
+                </div>
+                <div class="card bg-amber-50 border-t-8 border-amber-500 relative">
+                    <span class="absolute top-0 right-0 -mt-4 -mr-4 bg-[#CFA44C] text-white text-sm font-bold px-4 py-2 rounded-full transform rotate-12">TOP CHOIX</span>
+                    <h3 class="font-bold text-2xl mb-4 text-amber-600">Pack Or</h3>
+                    <p class="text-3xl font-bold mb-4 text-green-700">700 000 XOF</p>
+                    <ul class="list-disc list-inside text-left text-gray-700 space-y-2">
+                        <li>Avantages Pack Argent.</li>
+                        <li>Logo en évidence sur tenues des équipes.</li>
+                        <li>Discours lors de la finale.</li>
+                        <li>Programme de stages ou parrainage.</li>
+                    </ul>
+                </div>
+                <div class="card bg-yellow-100 border-t-8 border-yellow-500 relative">
+                    <span class="absolute top-0 right-0 -mt-4 -mr-4 bg-[#CFA44C] text-white text-sm font-bold px-4 py-2 rounded-full transform rotate-12">TOP CHOIX</span>
+                    <h3 class="font-bold text-2xl mb-4 text-yellow-600">Pack Champion</h3>
+                    <p class="text-3xl font-bold mb-4 text-green-700">1 000 000+ XOF</p>
+                    <ul class="list-disc list-inside text-left text-gray-700 space-y-2">
+                        <li>Avantages Pack Or.</li>
+                        <li>Partenaire Principal avec mention exclusive.</li>
+                        <li>Implication directe dans le suivi des participants.</li>
+                        <li>Un membre dans le jury de la finale.</li>
+                        <li>Visibilité maximale sur tous les supports.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Équipe -->
+    <section id="equipe" class="section">
+        <div class="container">
+            <h2 class="section-title">L'Équipe du Projet</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Visuel d'équipe avec icônes -->
+                <div class="col-span-full mb-8 text-center p-12 bg-gray-200 rounded-2xl shadow-lg flex flex-wrap justify-center gap-8">
+                    <div class="flex flex-col items-center">
+                        <i class="fas fa-user-tie text-5xl text-gray-700 mb-2"></i>
+                        <p class="text-gray-600 italic font-semibold">Porteur de projet</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fas fa-boxes text-5xl text-gray-700 mb-2"></i>
+                        <p class="text-gray-600 italic font-semibold">Logistique</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fas fa-bullhorn text-5xl text-gray-700 mb-2"></i>
+                        <p class="text-gray-600 italic font-semibold">Communication</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fas fa-graduation-cap text-5xl text-gray-700 mb-2"></i>
+                        <p class="text-gray-600 italic font-semibold">Pédagogie</p>
+                    </div>
+                </div>
+                <div class="card text-center bg-gray-50">
+                    <h3 class="font-bold text-xl mb-2 text-green-800">Jean Hervé Frumence Sambou</h3>
+                    <p class="text-sm text-gray-500">Porteur du projet</p>
+                    <p class="mt-4 text-gray-700">
+                        Porteur de projet par passion, Jean Hervé a lui-même remporté un concours d'éloquence à l'université, vivant pleinement le pouvoir transformateur de la parole. Fort de cette expérience, il s'engage aujourd'hui à transmettre ces outils de leadership et de citoyenneté active à la nouvelle génération.
+                    </p>
+                </div>
+                <div class="card text-center bg-gray-100">
+                    <h3 class="font-bold text-xl mb-2 text-green-800">Responsable Logistique</h3>
+                    <p class="text-sm text-gray-500">Expert en organisation et en coordination</p>
+                    <p class="mt-4 text-gray-700">
+                        Il supervise l'ensemble des phases logistiques pour garantir un déroulement fluide et professionnel du concours.
+                    </p>
+                </div>
+                <div class="card text-center bg-gray-200">
+                    <h3 class="font-bold text-xl mb-2 text-green-800">Responsable Communication</h3>
+                    <p class="text-sm text-gray-500">Spécialiste en communication digitale</p>
+                    <p class="mt-4 text-gray-700">
+                        Chargé de la visibilité du projet, il garantit une large diffusion et une forte notoriété de l'événement.
+                    </p>
+                </div>
+                <div class="card text-center bg-gray-300">
+                    <h3 class="font-bold text-xl mb-2 text-green-800">Coordinateur Pédagogique</h3>
+                    <p class="text-sm text-gray-500">Un choix mûrement réfléchi pour l'excellence</p>
+                    <p class="mt-4 text-gray-700">
+                        Conçoit et met en œuvre le programme d'accompagnement pour le développement des compétences oratoires des participants. Son rôle crucial assure l'excellence de la formation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Inscription -->
+    <section id="inscription" class="section bg-[#556B2F] text-white rounded-t-[4rem] shadow-2xl">
+        <div class="container text-center">
+            <h2 class="text-4xl font-bold mb-4">Rejoignez l'Aventure</h2>
+            <p class="max-w-xl mx-auto mb-8 text-gray-200">
+                Devenez un acteur du changement en vous inscrivant comme école partenaire ou comme un partenaire financier.
+            </p>
+
+            <!-- Mise à jour pour Formspree : Remplace l'action mailto: -->
+            <form id="contactForm" action="https://formspree.io/f/mjkejnpg" method="POST" class="bg-white p-8 rounded-2xl shadow-lg max-w-lg mx-auto text-gray-800">
+                <div class="mb-5">
+                    <label for="type" class="block text-left text-sm font-medium text-gray-700">Type d'inscription :</label>
+                    <select id="type" name="type" class="w-full px-5 py-3 mt-1 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-green-500" required>
+                        <option value="Ecole">École</option>
+                        <option value="Partenaire">Partenaire</option>
+                    </select>
+                </div>
+                <div class="mb-5">
+                    <input type="text" id="organization" name="organization" placeholder="Nom de l'école ou de l'entreprise" class="w-full px-5 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-green-500" required>
+                </div>
+                <div class="mb-5">
+                    <input type="text" id="name" name="name" placeholder="Votre nom et prénom" class="w-full px-5 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-green-500" required>
+                </div>
+                <div class="mb-5">
+                    <input type="email" id="email" name="_replyto" placeholder="Votre Email" class="w-full px-5 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-green-500" required>
+                </div>
+                <div class="mb-5">
+                    <textarea id="message" name="message" rows="4" placeholder="Votre Message" class="w-full px-5 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-green-500" required></textarea>
+                </div>
+                <button type="submit" class="w-full btn bg-[#556B2F] hover:bg-[#6B8E23]">Envoyer le message</button>
+                <p id="form-status" class="mt-4 text-sm text-gray-600"></p>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Form submission with Formspree
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('form-status');
+
+        contactForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            formStatus.textContent = "Envoi en cours...";
+            
+            const formData = new FormData(event.target);
+            
+            try {
+                const response = await fetch(event.target.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    formStatus.textContent = "Votre message a été envoyé avec succès !";
+                    contactForm.reset();
+                } else {
+                    let errorMessage = "Une erreur est survenue. Veuillez réessayer.";
+                    try {
+                        const errorData = await response.json();
+                        if (errorData.errors && errorData.errors.length > 0) {
+                            errorMessage = errorData.errors.map(err => err.message).join(", ");
+                        }
+                    } catch (e) {
+                        console.error('La réponse du serveur n\'est pas au format JSON.', e);
+                        errorMessage = "Une erreur est survenue. Le serveur n'a pas répondu comme attendu.";
+                    }
+                    formStatus.textContent = errorMessage;
+                }
+            } catch (error) {
+                console.error('Erreur de soumission du formulaire :', error);
+                formStatus.textContent = "Une erreur est survenue. Veuillez vérifier votre connexion.";
+            }
+        });
+    </script>
+</body>
+</html>
